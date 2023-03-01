@@ -17,7 +17,6 @@
 		6947F12629A50F7200E7A79E /* FruitsAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6947F12529A50F7200E7A79E /* FruitsAddView.swift */; };
 		6947F12829A50F7700E7A79E /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6947F12729A50F7700E7A79E /* EditView.swift */; };
 		6947F12A29A50F7C00E7A79E /* FruitData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6947F12929A50F7C00E7A79E /* FruitData.swift */; };
-		6947F12E29A617AD00E7A79E /* ExperimentViw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6947F12D29A617AD00E7A79E /* ExperimentViw.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,7 +50,6 @@
 		6947F12529A50F7200E7A79E /* FruitsAddView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FruitsAddView.swift; sourceTree = "<group>"; };
 		6947F12729A50F7700E7A79E /* EditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		6947F12929A50F7C00E7A79E /* FruitData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FruitData.swift; sourceTree = "<group>"; };
-		6947F12D29A617AD00E7A79E /* ExperimentViw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperimentViw.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,7 +102,6 @@
 			children = (
 				6947F0FB29A50EFA00E7A79E /* Sako0602_Kadai19_SwiftUIApp.swift */,
 				6947F0FD29A50EFA00E7A79E /* ContentView.swift */,
-				6947F12D29A617AD00E7A79E /* ExperimentViw.swift */,
 				6947F12529A50F7200E7A79E /* FruitsAddView.swift */,
 				6947F12729A50F7700E7A79E /* EditView.swift */,
 				6947F12929A50F7C00E7A79E /* FruitData.swift */,
@@ -272,7 +269,6 @@
 				6947F0FE29A50EFA00E7A79E /* ContentView.swift in Sources */,
 				6947F12A29A50F7C00E7A79E /* FruitData.swift in Sources */,
 				6947F0FC29A50EFA00E7A79E /* Sako0602_Kadai19_SwiftUIApp.swift in Sources */,
-				6947F12E29A617AD00E7A79E /* ExperimentViw.swift in Sources */,
 				6947F12829A50F7700E7A79E /* EditView.swift in Sources */,
 				6947F12629A50F7200E7A79E /* FruitsAddView.swift in Sources */,
 			);
