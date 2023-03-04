@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
+
+    enum Error: Swift.Error {
+        case saveError
+        case loadError
+    }
     
     @State private var isPresentedAddView = false
     @State private var isPresentedEditVIew = false
@@ -19,14 +24,20 @@ struct ContentView: View {
         FruitsData(name: "パイナップル", isChecked: true)
     ]
     
+    private let userDefaultsKey = "data"
+
     var body: some View {
         NavigationStack {
             List {
                 ForEach(fruitArray.indices, id: \.self) { index in
                     HStack{
                         Button {
-                            fruitArray[index].isChecked.toggle()
-                            saveData()
+                            do {
+                                fruitArray[index].isChecked.toggle()
+                                try saveData()
+                            } catch {
+                                // ユーザーにエラー発生を提示する場合はここで処理する
+                            }
                         } label: {
                             HStack{
                                 Image(systemName: fruitArray[index].isChecked
@@ -48,8 +59,12 @@ struct ContentView: View {
                         .buttonStyle(BorderlessButtonStyle())
                     }
                 }.onDelete { fruitIndex in
-                    fruitArray.remove(atOffsets: fruitIndex)
-                    saveData()
+                    do {
+                        fruitArray.remove(atOffsets: fruitIndex)
+                        try saveData()
+                    } catch {
+                        // ユーザーにエラー発生を提示する場合はここで処理する
+                    }
                 }
             }
             .toolbar {
@@ -65,9 +80,13 @@ struct ContentView: View {
             .sheet(isPresented: $isPresentedAddView) {
                 FruitsAddView(
                     save: { name in
-                        fruitArray.append(FruitsData(name: name, isChecked: false))
-                        saveData()
-                        isPresentedAddView = false
+                        do {
+                            fruitArray.append(FruitsData(name: name, isChecked: false))
+                            try saveData()
+                            isPresentedAddView = false
+                        } catch {
+                            // ユーザーにエラー発生を提示する場合はここで処理する
+                        }
                     } ,cancel: {
                         isPresentedAddView = false
                     }
@@ -77,13 +96,17 @@ struct ContentView: View {
                 EditView (
                     fruitNewItem: editFruit.name,
                     save: { name in
-                        guard let index = fruitArray.firstIndex(where: {
-                            $0.id == editFruit.id
-                        }) else { return }
-                        fruitArray[index].name = name
-                        fruitArray[index].isChecked = false
-                        saveData()
-                        isPresentedEditVIew = false
+                        do {
+                            guard let index = fruitArray.firstIndex(where: {
+                                $0.id == editFruit.id
+                            }) else { return }
+                            fruitArray[index].name = name
+                            fruitArray[index].isChecked = false
+                            try saveData()
+                            isPresentedEditVIew = false
+                        } catch {
+                            // ユーザーにエラー発生を提示する場合はここで処理する
+                        }
                     },
                     cancel: {
                         isPresentedEditVIew = false
@@ -91,27 +114,28 @@ struct ContentView: View {
                 )
             }
             .onAppear(){
-                guard let fruitLoadData = loadData() else{
-                    return
+                do {
+                    fruitArray = try loadData()
+                } catch {
+                    // ユーザーにエラー発生を提示する場合はここで処理する
                 }
-                fruitArray = fruitLoadData
             }
         }
     }
-    
-    func saveData() {
+
+    private func saveData() throws {
         let jsonEncoder = JSONEncoder()
         guard let data = try? jsonEncoder.encode(fruitArray) else {
-            return
+            throw Error.saveError
         }
-        UserDefaults.standard.set(data, forKey: "data")
+        UserDefaults.standard.set(data, forKey: userDefaultsKey)
     }
     
-    func loadData() -> [FruitsData]? {
+    private func loadData() throws -> [FruitsData] {
         let jsonDecoder = JSONDecoder()
-        guard let data = UserDefaults.standard.data(forKey: "data"),
+        guard let data = UserDefaults.standard.data(forKey: userDefaultsKey),
               let array = try? jsonDecoder.decode([FruitsData].self, from: data) else {
-            return nil
+            throw Error.loadError
         }
         return array
     }
